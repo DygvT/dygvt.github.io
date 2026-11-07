@@ -1,6 +1,6 @@
 import { mkdir, writeFile, copyFile } from 'node:fs/promises';
 
-const origin = 'https://kamijo-score.y-liang-cosm-8044.chatgpt.site';
+const origin = 'https://dygvt.github.io';
 const contact = '<a href="mailto:reugwtmegorr@gmail.com">reugwtmegorr@gmail.com</a>';
 const pages = [
   {
