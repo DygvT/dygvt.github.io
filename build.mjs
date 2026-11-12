@@ -41,6 +41,7 @@ const pages = [
 
 await mkdir('dist', { recursive: true });
 await copyFile('style.css', 'dist/style.css');
+await copyFile('google326ad673a918c396.html', 'dist/google326ad673a918c396.html');
 for (const page of pages) {
   const directory = `dist/${page.path}`;
   await mkdir(directory, { recursive: true });
