@@ -1,7 +1,10 @@
 import { mkdir, writeFile, copyFile } from 'node:fs/promises';
 
 const origin = 'https://dygvt.github.io';
-const contact = '<a href="mailto:reugwtmegorr@gmail.com">reugwtmegorr@gmail.com</a>';
+// The newest build testers can install from TestFlight. The app (TestFlight builds only) reads /score/version.json
+// and asks testers on an older build to update. Raise `build` after a new build becomes available to testers.
+const latest = { schema: 1, testflight: { build: 12, version: '0.1' } };
+const contact ='<a href="mailto:reugwtmegorr@gmail.com">reugwtmegorr@gmail.com</a>';
 const pages = [
   {
     path: '', title: 'Score — A place for your sheet music',
@@ -22,6 +25,7 @@ const pages = [
     <h2>Optional iCloud Drive sync</h2><p>If you choose iCloud Drive, Score reads and writes score files in its own iCloud Drive folder, or in a folder you select when that folder is unavailable. Apple provides iCloud storage under its <a href="https://www.apple.com/legal/privacy/">privacy policy</a>.</p>
     <h2>How data is used and shared</h2><p>Score uses your data to display, edit, play and sync your scores and provide the features you choose. It does not sell Google user data, use it for advertising, or use it to train AI models. Score does not automatically send score files or diagnostic logs to the developer. If you choose to export a score or share a log, the destination and recipient are your choice.</p><p>Score's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
     <h2>Diagnostics</h2><p>The app keeps limited diagnostic logs on your device, such as operation results, error codes, durations and file counts. App log files rotate at 256 KiB with three retained generations; macOS also manages system logs. Score's app logs do not contain score names, note sequences, annotations, Google passwords or OAuth token values. You can choose to export a log for support.</p>
+    <h2>Update check in beta versions</h2><p>Beta versions of Score distributed through TestFlight download a small public file from this website to learn whether a newer build is available, and ask you to update if so. The request carries no account, device identifier or score data. As with any web request, the hosting provider processes your IP address to deliver the file.</p>
     <h2>Disconnecting and deleting data</h2><p>Use Sign Out in Score's sync settings to remove its locally stored Google tokens. You can also revoke Score's access in your <a href="https://myaccount.google.com/connections">Google Account connections</a>. Disconnecting does not delete files from Drive or your device. Delete those files separately using Score, Google Drive or your device's file tools. When syncing is enabled, deletions can be propagated to your other devices; Google Drive deletions are sent to the trash.</p><p>Locally stored data remains until you remove it. Google Drive and iCloud copies remain under your control. The developer has no remote copy to delete on your behalf.</p>
     <h2>This website and support</h2><p>This website publishes app information and does not accept score uploads or Google credentials. Its hosting provider processes web requests to serve these pages. If you contact the developer by email, your message and contact information are used to respond to your request. Do not send passwords or OAuth tokens.</p>
     <h2>Changes and contact</h2><p>This page will be updated when Score's data practices change. A new use of Google data will require disclosure and consent before that use begins. For privacy questions, contact ${contact}.</p></article>`
@@ -42,6 +46,8 @@ const pages = [
 await mkdir('dist', { recursive: true });
 await copyFile('style.css', 'dist/style.css');
 await copyFile('google326ad673a918c396.html', 'dist/google326ad673a918c396.html');
+await mkdir('dist/score', { recursive: true });
+await writeFile('dist/score/version.json', JSON.stringify(latest) + '\n');
 for (const page of pages) {
   const directory = `dist/${page.path}`;
   await mkdir(directory, { recursive: true });
