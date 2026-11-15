@@ -3,7 +3,7 @@ import { mkdir, writeFile, copyFile } from 'node:fs/promises';
 const origin = 'https://dygvt.github.io';
 // The newest build testers can install from TestFlight. The app (TestFlight builds only) reads /score/version.json
 // and asks testers on an older build to update. Raise `build` after a new build becomes available to testers.
-const latest = { schema: 1, testflight: { build: 19, version: '0.1' } };
+const latest = { schema: 1, testflight: { build: 22, version: '0.1' } };
 const contact ='<a href="mailto:reugwtmegorr@gmail.com">reugwtmegorr@gmail.com</a>';
 const pages = [
   {
